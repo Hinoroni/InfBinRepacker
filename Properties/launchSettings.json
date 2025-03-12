@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InfBinRepacker": {
+      "commandName": "Project",
+      "commandLineArgs": "-e"
+    }
+  }
+}
