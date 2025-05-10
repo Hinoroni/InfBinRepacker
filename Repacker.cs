@@ -43,7 +43,7 @@ namespace InfBinRepackager
 
             Directory.CreateDirectory(OutputDirectory);
 
-            using (var memoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate, "mappeddata.bin"))
+            using (var memoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate))
             {
                 Parallel.ForEach(Inf.Files, file =>
                 {
@@ -93,7 +93,7 @@ namespace InfBinRepackager
 
             Directory.CreateDirectory(OutputDirectory);
 
-            using (var memoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate, "mappeddata.bin"))
+            using (var memoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate))
             {
                 byte[] compressedFile = new byte[file.CompressedSize];
 
@@ -311,9 +311,9 @@ namespace InfBinRepackager
 
             if (append)
             {
-                using (var oldMemoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate, "mappedolddata.bin"))
+                using (var oldMemoryMap = MemoryMappedFile.CreateFromFile(BinPath, FileMode.OpenOrCreate))
                 {
-                    using (var newMemoryMap = MemoryMappedFile.CreateFromFile(Path.Combine(OutputDirectory, Path.GetFileName(BinPath)), FileMode.OpenOrCreate, "mappednewdata.bin", Inf.DataBlockCount * InfFile.BlockSize))
+                    using (var newMemoryMap = MemoryMappedFile.CreateFromFile(Path.Combine(OutputDirectory, Path.GetFileName(BinPath)), FileMode.OpenOrCreate, null, Inf.DataBlockCount * InfFile.BlockSize))
                     {
                         Parallel.ForEach(Inf.Files, file =>
                         {
@@ -350,7 +350,7 @@ namespace InfBinRepackager
             }
             else
             {
-                using (var memoryMap = MemoryMappedFile.CreateFromFile(Path.Combine(OutputDirectory, Path.GetFileName(BinPath)), FileMode.OpenOrCreate, "mappeddata.bin", Inf.DataBlockCount * InfFile.BlockSize))
+                using (var memoryMap = MemoryMappedFile.CreateFromFile(Path.Combine(OutputDirectory, Path.GetFileName(BinPath)), FileMode.OpenOrCreate, null, Inf.DataBlockCount * InfFile.BlockSize))
                 {
                     Parallel.ForEach(Inf.Files, file =>
                     {
